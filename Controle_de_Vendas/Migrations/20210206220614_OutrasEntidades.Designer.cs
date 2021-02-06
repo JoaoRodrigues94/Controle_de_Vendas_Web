@@ -3,14 +3,16 @@ using System;
 using Controle_de_Vendas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Controle_de_Vendas.Migrations
 {
     [DbContext(typeof(Controle_de_VendasContext))]
-    partial class Controle_de_VendasContextModelSnapshot : ModelSnapshot
+    [Migration("20210206220614_OutrasEntidades")]
+    partial class OutrasEntidades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
