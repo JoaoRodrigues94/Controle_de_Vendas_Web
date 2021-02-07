@@ -42,5 +42,30 @@ namespace Controle_de_Vendas.Controllers
       servicos.Insert(vendedor);
       return RedirectToAction(nameof(Index));
     }
+
+    public IActionResult Delete(int? id)
+    {
+      if(id == null)
+      {
+        return NotFound();
+      }
+
+      var x = servicos.FindById(id.Value);
+      if(x == null)
+      {
+        return NotFound();
+      }
+
+      return View(x);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Delete(int id)
+    {
+      servicos.Remove(id);
+
+      return RedirectToAction(nameof(Index));
+    }
   }
 }

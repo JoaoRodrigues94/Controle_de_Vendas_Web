@@ -26,5 +26,17 @@ namespace Controle_de_Vendas.Servicos
       DB.Add(obj);
       DB.SaveChanges();
     }
+
+    public Vendedor FindById(int id)
+    {
+      return DB.Vendedores.FirstOrDefault(x => x.VendedorID == id);
+    }
+
+    public void Remove(int id)
+    {
+      var r = DB.Vendedores.Find(id);
+      DB.Vendedores.Remove(r);
+      DB.SaveChanges();
+    }
   }
 }
