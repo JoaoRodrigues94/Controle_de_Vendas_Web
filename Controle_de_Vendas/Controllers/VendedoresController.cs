@@ -1,4 +1,5 @@
 ﻿using Controle_de_Vendas.Models;
+using Controle_de_Vendas.Models.ViewModels;
 using Controle_de_Vendas.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,10 +12,12 @@ namespace Controle_de_Vendas.Controllers
   public class VendedoresController : Controller
   {
     private readonly ServicosVendedores servicos;
+    private readonly ServicosDepartamento departamento;
 
-    public VendedoresController(ServicosVendedores _servicos)
+    public VendedoresController(ServicosVendedores _servicos, ServicosDepartamento _departamento)
     {
       servicos = _servicos;
+      departamento = _departamento;
     }
 
     public IActionResult Index()
@@ -26,7 +29,10 @@ namespace Controle_de_Vendas.Controllers
 
     public  IActionResult Create()
     {
-      return View();
+      var departament = departamento.FindAll();
+      var viewModel = new VendedoresViewModel { Departamentos = departament };
+
+      return View(viewModel);
     }
 
     [HttpPost]

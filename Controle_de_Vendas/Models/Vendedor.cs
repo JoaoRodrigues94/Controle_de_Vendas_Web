@@ -12,6 +12,7 @@ namespace Controle_de_Vendas.Models
     public DateTime Aniversario { get; set; }
     public double SalarioBase { get; set; }
     public Departamento Departamento { get; set; }
+    public int DepartamentoID { get; set; }
     public ICollection<Vendas> Vendas { get; set; } = new List<Vendas>();
 
     public Vendedor()
