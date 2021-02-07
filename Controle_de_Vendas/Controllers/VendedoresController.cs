@@ -1,4 +1,5 @@
-﻿using Controle_de_Vendas.Servicos;
+﻿using Controle_de_Vendas.Models;
+using Controle_de_Vendas.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,19 @@ namespace Controle_de_Vendas.Controllers
       var list = servicos.FindAll();
 
       return View(list);
+    }
+
+    public  IActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Vendedor vendedor)
+    {
+      servicos.Insert(vendedor);
+      return RedirectToAction(nameof(Index));
     }
   }
 }

@@ -20,5 +20,11 @@ namespace Controle_de_Vendas.Servicos
     {
       return DB.Vendedores.ToList();
     }
+
+    public void Insert(Vendedor obj)
+    {
+      DB.Add(obj);
+      DB.SaveChanges();
+    }
   }
 }
