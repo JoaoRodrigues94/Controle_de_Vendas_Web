@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Controle_de_Vendas.Data;
+using Controle_de_Vendas.Servicos;
 
 namespace Controle_de_Vendas
 {
@@ -40,7 +36,8 @@ namespace Controle_de_Vendas
               options.UseMySql(Configuration.GetConnectionString("Controle_de_VendasContext"), builder =>
 builder.MigrationsAssembly("Controle_de_Vendas")));
 
-      services.AddScoped<SeedingService>(); 
+      services.AddScoped<SeedingService>();
+      services.AddScoped<ServicosVendedores>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
