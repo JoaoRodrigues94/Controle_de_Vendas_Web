@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Controle_de_Vendas.Servicos.Exceptions;
 
 namespace Controle_de_Vendas.Servicos
 {
@@ -38,6 +39,23 @@ namespace Controle_de_Vendas.Servicos
       var r = DB.Vendedores.Find(id);
       DB.Vendedores.Remove(r);
       DB.SaveChanges();
+    }
+
+    public void Update(Vendedor obj)
+    {
+      if(!DB.Vendedores.Any(x => x.VendedorID == obj.VendedorID))
+      {
+        throw new NotFoundException("ID Não Encontrado!");
+      }
+      try
+      {
+        DB.Update(obj);
+        DB.SaveChanges();
+      }
+      catch(DbUpdateConcurrencyException ex)
+      {
+        throw new DbConcurrencyException(ex.Message);
+      }
     }
   }
 }

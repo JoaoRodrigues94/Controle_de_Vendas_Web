@@ -1,6 +1,7 @@
 ﻿using Controle_de_Vendas.Models;
 using Controle_de_Vendas.Models.ViewModels;
 using Controle_de_Vendas.Servicos;
+using Controle_de_Vendas.Servicos.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,48 @@ namespace Controle_de_Vendas.Controllers
       }
 
       return View(x);
+    }
+
+    public IActionResult Edit(int? id)
+    {
+      if (id == null)
+      {
+        return NotFound();
+      }
+
+      var x = servicos.FindById(id.Value);
+      if(x == null)
+      {
+        return NotFound();
+      }
+
+      List<Departamento> departamentos = departamento.FindAll();
+      VendedoresViewModel viewModel = new VendedoresViewModel { Vendedor = x, Departamentos = departamentos };
+      return View(viewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, Vendedor vendedor)
+    {
+      if(id != vendedor.VendedorID)
+      {
+        return BadRequest();
+      }
+
+      try
+      {
+        servicos.Update(vendedor);
+        return RedirectToAction(nameof(Index));
+      }
+      catch(NotFoundException)
+      {
+        return NotFound();
+      }
+      catch (DbConcurrencyException)
+      {
+        return BadRequest();
+      }
     }
   }
 }
