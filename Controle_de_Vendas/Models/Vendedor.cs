@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Controle_de_Vendas.Models
 {
@@ -8,8 +9,14 @@ namespace Controle_de_Vendas.Models
   {
     public int VendedorID { get; set; }
     public string Nome { get; set; }
+    [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
+    [Display(Name = "Data de Nascimento")]
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime Aniversario { get; set; }
+    [Display(Name = "Salário Base")]
+    [DisplayFormat(DataFormatString = "{0:F2}")]
     public double SalarioBase { get; set; }
     public Departamento Departamento { get; set; }
     public int DepartamentoID { get; set; }

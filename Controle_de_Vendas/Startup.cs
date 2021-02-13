@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Controle_de_Vendas.Data;
 using Controle_de_Vendas.Servicos;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace Controle_de_Vendas
 {
@@ -44,6 +47,16 @@ builder.MigrationsAssembly("Controle_de_Vendas")));
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
     {
+      var enBR = new CultureInfo("en-BR");
+      var localizationOptions = new RequestLocalizationOptions
+      {
+        DefaultRequestCulture = new RequestCulture(enBR),
+        SupportedCultures = new List<CultureInfo> { enBR },
+        SupportedUICultures = new List<CultureInfo> { enBR }
+      };
+
+      app.UseRequestLocalization(localizationOptions);
+
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
