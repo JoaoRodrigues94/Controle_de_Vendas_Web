@@ -1,7 +1,80 @@
-﻿
+﻿@model IEnumerable<Controle_de_Vendas.Models.Vendas>
 @{
-    ViewData["Title"] = "Busca Simples";
+  ViewData["Title"] = "Busca Simples";
 }
 
 <h2>@ViewData["Title"]</h2>
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <form class="navbar-form navbar-left" role="search" asp-action="BuscaSimples">
+      <div class="form-group">
+        <div class="form-group">
+          <label for="min">Data Minima</label>
+          <input type="date" class="form-control" name="min" value=@ViewData["min"] />
+        </div>
+        <div class="form-group">
+          <label for="max">Data Máxima</label>
+          <input type="date" class="form-control" name="max" value=@ViewData["max"] />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+  </div>
+</nav>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Total de Vendas: @Model.Sum(x => x.Qtde).ToString("F2")</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr class="success">
+          <th>
+            @Html.DisplayNameFor(model => model.VendasID)
+          </th>
+          <th>
+            @Html.DisplayNameFor(model => model.Data)
+          </th>
+          <th>
+            @Html.DisplayNameFor(model => model.Vendedor)
+          </th>
+          <th>
+            @Html.DisplayNameFor(model => model.Vendedor.Departamento)
+          </th>
+          <th>
+            @Html.DisplayNameFor(model => model.Qtde)
+          </th>
+          <th>
+            @Html.DisplayNameFor(model => model.Status)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach(var item in Model)
+        {
+          <tr>
+            <td>
+              @Html.DisplayFor(modelItem => item.VendasID)
+            </td>
+            <td>
+              @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+              @Html.DisplayFor(modelItem => item.Vendedor.Nome)
+            </td>
+            <td>
+              @Html.DisplayFor(modelItem => item.Vendedor.Departamento.Nome)
+            </td>
+            <td>
+              @Html.DisplayFor(modelItem => item.Qtde)
+            </td>
+            <td>
+              @Html.DisplayFor(modelItem => item.Status)
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
