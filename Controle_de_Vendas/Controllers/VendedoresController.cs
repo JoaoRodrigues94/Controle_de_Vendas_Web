@@ -67,5 +67,21 @@ namespace Controle_de_Vendas.Controllers
 
       return RedirectToAction(nameof(Index));
     }
+
+    public IActionResult Details(int id)
+    {
+      if (id == 0)
+      {
+        return NotFound();
+      }
+
+      var x = servicos.FindById(id);
+      if (x == null)
+      {
+        return NotFound();
+      }
+
+      return View(x);
+    }
   }
 }

@@ -1,0 +1,46 @@
+﻿@model Controle_de_Vendas.Models.Vendedor
+@{
+  ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+<div>
+  <h4>Vendedor</h4>
+  <hr />
+  <d1 class="dl-horizontal">
+    <dt>
+      @Html.DisplayNameFor(model => model.Nome)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Nome)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Email)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Email)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Aniversario)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Aniversario)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.SalarioBase)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.SalarioBase)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Departamento) 
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Departamento.Nome)
+    </dd>
+  </d1>
+</div>
+<div>
+  <a asp-action="Edit" asp-route-id="@Model.VendedorID" class="btn btn-default">Edit</a>
+  <a asp-action="Index">Voltar</a>
+</div>

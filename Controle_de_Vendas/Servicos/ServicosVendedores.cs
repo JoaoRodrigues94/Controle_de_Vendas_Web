@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Vendas.Servicos
 {
@@ -29,7 +30,7 @@ namespace Controle_de_Vendas.Servicos
 
     public Vendedor FindById(int id)
     {
-      return DB.Vendedores.FirstOrDefault(x => x.VendedorID == id);
+      return DB.Vendedores.Include(x => x.Departamento).FirstOrDefault(x => x.VendedorID == id);
     }
 
     public void Remove(int id)
