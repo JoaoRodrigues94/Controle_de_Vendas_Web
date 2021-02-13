@@ -22,16 +22,16 @@ namespace Controle_de_Vendas.Controllers
       departamento = _departamento;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-      var list = servicos.FindAll();
+      var list = await servicos.FindAllAsync();
 
       return View(list);
     }
 
-    public  IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-      var departament = departamento.FindAll();
+      var departament = await departamento.FindAllAsync();
       var viewModel = new VendedoresViewModel { Departamentos = departament };
 
       return View(viewModel);
@@ -39,27 +39,27 @@ namespace Controle_de_Vendas.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(Vendedor vendedor)
+    public async Task<IActionResult> Create(Vendedor vendedor)
     {
       if (!ModelState.IsValid)
       {
-        var _departamento = departamento.FindAll();
+        var _departamento = await departamento.FindAllAsync();
         var viewModel = new VendedoresViewModel { Vendedor = vendedor, Departamentos = _departamento };
         return View(viewModel);
       }
 
-      servicos.Insert(vendedor);
+      await servicos.InsertAsync(vendedor);
       return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Delete(int? id)
+    public async Task<IActionResult> Delete(int? id)
     {
       if(id == null)
       {
         return RedirectToAction(nameof(Error), new { message = "ID Não Foi Fornecido!" });
       }
 
-      var x = servicos.FindById(id.Value);
+      var x = await servicos.FindByIdAsync(id.Value);
       if(x == null)
       {
         return RedirectToAction(nameof(Error), new { message = "ID Não Encontrado!" });
@@ -70,21 +70,21 @@ namespace Controle_de_Vendas.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-      servicos.Remove(id);
+      await servicos.RemoveAsync(id);
 
       return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Details(int id)
+    public async Task<IActionResult> Details(int id)
     {
       if (id == 0)
       {
         return RedirectToAction(nameof(Error), new { message = "ID Não Foi Fornecido!" });
       }
 
-      var x = servicos.FindById(id);
+      var x = await servicos.FindByIdAsync(id);
       if (x == null)
       {
         return RedirectToAction(nameof(Error), new { message = "ID Não Encontrado!" });
@@ -93,31 +93,31 @@ namespace Controle_de_Vendas.Controllers
       return View(x);
     }
 
-    public IActionResult Edit(int? id)
+    public async Task<IActionResult> Edit(int? id)
     {
       if (id == null)
       {
         return RedirectToAction(nameof(Error), new { message = "ID Não Foi Fornecido!" });
       }
 
-      var x = servicos.FindById(id.Value);
+      var x = await servicos.FindByIdAsync(id.Value);
       if(x == null)
       {
         return RedirectToAction(nameof(Error), new { message = "ID Não Encontrado!" });
       }
 
-      List<Departamento> departamentos = departamento.FindAll();
+      List<Departamento> departamentos = await departamento.FindAllAsync();
       VendedoresViewModel viewModel = new VendedoresViewModel { Vendedor = x, Departamentos = departamentos };
       return View(viewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int id, Vendedor vendedor)
+    public async Task<IActionResult> Edit(int id, Vendedor vendedor)
     {
       if (!ModelState.IsValid)
       {
-        var _departamento = departamento.FindAll();
+        var _departamento = await departamento.FindAllAsync();
         var viewModel = new VendedoresViewModel { Vendedor = vendedor, Departamentos = _departamento };
         return View(viewModel);
       }
@@ -129,7 +129,7 @@ namespace Controle_de_Vendas.Controllers
 
       try
       {
-        servicos.Update(vendedor);
+        await servicos.UpdateAsync(vendedor);
         return RedirectToAction(nameof(Index));
       }
       catch(ApplicationException ex)

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Vendas.Servicos
 {
@@ -15,9 +16,9 @@ namespace Controle_de_Vendas.Servicos
     {
       DB = context;
     }
-    public List<Departamento> FindAll()
+    public async Task<List<Departamento>> FindAllAsync()
     {
-      return DB.Departamento.OrderBy(x => x.Nome).ToList();
+      return await DB.Departamento.OrderBy(x => x.Nome).ToListAsync();
     }
   }
 }

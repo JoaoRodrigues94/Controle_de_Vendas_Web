@@ -18,39 +18,40 @@ namespace Controle_de_Vendas.Servicos
       DB = context;
     }
 
-    public List<Vendedor> FindAll()
+    public async Task<List<Vendedor>> FindAllAsync()
     {
-      return DB.Vendedores.ToList();
+      return await DB.Vendedores.ToListAsync();
     }
 
-    public void Insert(Vendedor obj)
+    public async Task InsertAsync(Vendedor obj)
     {
       DB.Add(obj);
-      DB.SaveChanges();
+      await DB.SaveChangesAsync();
     }
 
-    public Vendedor FindById(int id)
+    public async Task<Vendedor> FindByIdAsync(int id)
     {
-      return DB.Vendedores.Include(x => x.Departamento).FirstOrDefault(x => x.VendedorID == id);
+      return await DB.Vendedores.Include(x => x.Departamento).FirstOrDefaultAsync(x => x.VendedorID == id);
     }
 
-    public void Remove(int id)
+    public async Task RemoveAsync(int id)
     {
-      var r = DB.Vendedores.Find(id);
+      var r = await DB.Vendedores.FindAsync(id);
       DB.Vendedores.Remove(r);
-      DB.SaveChanges();
+      await DB.SaveChangesAsync();
     }
 
-    public void Update(Vendedor obj)
+    public async Task UpdateAsync(Vendedor obj)
     {
-      if(!DB.Vendedores.Any(x => x.VendedorID == obj.VendedorID))
+      bool verifica = await DB.Vendedores.AnyAsync(x => x.VendedorID == obj.VendedorID);
+      if (!verifica)
       {
         throw new NotFoundException("ID Não Encontrado!");
       }
       try
       {
         DB.Update(obj);
-        DB.SaveChanges();
+        await DB.SaveChangesAsync();
       }
       catch(DbUpdateConcurrencyException ex)
       {
