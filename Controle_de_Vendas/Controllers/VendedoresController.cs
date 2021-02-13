@@ -5,6 +5,7 @@ using Controle_de_Vendas.Servicos.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,13 +49,13 @@ namespace Controle_de_Vendas.Controllers
     {
       if(id == null)
       {
-        return NotFound();
+        return RedirectToAction(nameof(Error), new { message = "ID Não Foi Fornecido!" });
       }
 
       var x = servicos.FindById(id.Value);
       if(x == null)
       {
-        return NotFound();
+        return RedirectToAction(nameof(Error), new { message = "ID Não Encontrado!" });
       }
 
       return View(x);
@@ -73,13 +74,13 @@ namespace Controle_de_Vendas.Controllers
     {
       if (id == 0)
       {
-        return NotFound();
+        return RedirectToAction(nameof(Error), new { message = "ID Não Foi Fornecido!" });
       }
 
       var x = servicos.FindById(id);
       if (x == null)
       {
-        return NotFound();
+        return RedirectToAction(nameof(Error), new { message = "ID Não Encontrado!" });
       }
 
       return View(x);
@@ -89,13 +90,13 @@ namespace Controle_de_Vendas.Controllers
     {
       if (id == null)
       {
-        return NotFound();
+        return RedirectToAction(nameof(Error), new { message = "ID Não Foi Fornecido!" });
       }
 
       var x = servicos.FindById(id.Value);
       if(x == null)
       {
-        return NotFound();
+        return RedirectToAction(nameof(Error), new { message = "ID Não Encontrado!" });
       }
 
       List<Departamento> departamentos = departamento.FindAll();
@@ -109,7 +110,7 @@ namespace Controle_de_Vendas.Controllers
     {
       if(id != vendedor.VendedorID)
       {
-        return BadRequest();
+        return RedirectToAction(nameof(Error), new { message = "ID Não Corresponde!" });
       }
 
       try
@@ -117,14 +118,19 @@ namespace Controle_de_Vendas.Controllers
         servicos.Update(vendedor);
         return RedirectToAction(nameof(Index));
       }
-      catch(NotFoundException)
+      catch(ApplicationException ex)
       {
-        return NotFound();
+        return RedirectToAction(nameof(Error), new { message = ex.Message });
       }
-      catch (DbConcurrencyException)
+    }
+    public IActionResult Error(string message)
+    {
+      var viewmodel = new ErrorViewModel
       {
-        return BadRequest();
-      }
+        Message = message,
+        RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+      };
+      return View(viewmodel);
     }
   }
 }
