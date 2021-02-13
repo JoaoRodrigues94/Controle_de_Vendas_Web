@@ -2,6 +2,9 @@
 @{
   ViewData["Title"] = "Edit";
 }
+@section Scripts{
+  @{ await Html.RenderPartialAsync("_validationScriptsPartial");}
+}
 
 <h2>@ViewData["Title"]</h2>
 
@@ -14,22 +17,26 @@
       <div class="form-group">
         <label asp-for="Vendedor.Nome" class="control-label"></label>
         <input asp-for="Vendedor.Nome" class="form-control" />
+        <span asp-validation-for="Vendedor.Nome" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.Email" class="control-label"></label>
         <input asp-for="Vendedor.Email" class="form-control" />
+        <span asp-validation-for="Vendedor.Email" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.Aniversario" class="control-label"></label>
         <input asp-for="Vendedor.Aniversario" class="form-control" />
+        <span asp-validation-for="Vendedor.Aniversario" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.SalarioBase" class="control-label"></label>
         <input asp-for="Vendedor.SalarioBase" class="form-control" />
+        <span asp-validation-for="Vendedor.SalarioBase" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.DepartamentoID" class="control-label"></label>
-        <select asp-for="Vendedor.DepartamentoID" asp-items="@(new SelectList(Model.Departamentos, "DepartamentoID", "Nome"))"  class="form-control"></select>
+        <select asp-for="Vendedor.DepartamentoID" asp-items="@(new SelectList(Model.Departamentos, "DepartamentoID", "Nome"))" class="form-control"></select>
       </div>
       <div class="form-group">
         <input type="submit" value="Create" class="btn btn-default" />

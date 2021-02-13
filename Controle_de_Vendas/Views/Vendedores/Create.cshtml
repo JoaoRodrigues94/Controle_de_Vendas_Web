@@ -1,30 +1,40 @@
 ﻿@model Controle_de_Vendas.Models.ViewModels.VendedoresViewModel
 @{
-    ViewData["Title"] = "Create";
+  ViewData["Title"] = "Create";
+}
+@section Scripts{
+  @{ await Html.RenderPartialAsync("_validationScriptsPartial");}
 }
 
 <h2>@ViewData["Title"]</h2>
 
 <h4>Vendedor</h4>
-<hr/>
+<hr />
 <div class="row">
   <div class="col-md-4">
     <form asp-action="Create">
+      <div asp-validation-summary="All" class="text-danger"></div>
       <div class="form-group">
         <label asp-for="Vendedor.Nome" class="control-label"></label>
         <input asp-for="Vendedor.Nome" class="form-control" />
+        <span asp-validation-for="Vendedor.Nome" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.Email" class="control-label"></label>
         <input asp-for="Vendedor.Email" class="form-control" />
+        <span asp-validation-for="Vendedor.Email" class="text-danger"></span>
+
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.Aniversario" class="control-label"></label>
         <input asp-for="Vendedor.Aniversario" class="form-control" />
+        <span asp-validation-for="Vendedor.Aniversario" class="text-danger"></span>
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.SalarioBase" class="control-label"></label>
         <input asp-for="Vendedor.SalarioBase" class="form-control" />
+        <span asp-validation-for="Vendedor.SalarioBase" class="text-danger"></span>
+
       </div>
       <div class="form-group">
         <label asp-for="Vendedor.DepartamentoID" class="control-label"></label>
