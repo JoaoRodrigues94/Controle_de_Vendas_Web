@@ -36,9 +36,16 @@ namespace Controle_de_Vendas.Servicos
 
     public async Task RemoveAsync(int id)
     {
-      var r = await DB.Vendedores.FindAsync(id);
-      DB.Vendedores.Remove(r);
-      await DB.SaveChangesAsync();
+      try
+      {
+        var r = await DB.Vendedores.FindAsync(id);
+        DB.Vendedores.Remove(r);
+        await DB.SaveChangesAsync();
+      }
+      catch(DbUpdateException ex)
+      {
+        throw new IntegrityException(ex.Message);
+      }
     }
 
     public async Task UpdateAsync(Vendedor obj)
