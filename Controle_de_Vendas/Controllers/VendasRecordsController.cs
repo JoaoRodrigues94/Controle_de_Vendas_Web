@@ -35,9 +35,20 @@ namespace Controle_de_Vendas.Controllers
       var res = await vendasRecords.FindByDateAsync(min, max);
       return View(res);
     }
-    public IActionResult BuscaAgrupada()
+    public async  Task<IActionResult> BuscaAgrupada(DateTime? min, DateTime? max)
     {
-      return View();
+      if (!min.HasValue)
+      {
+        min = new DateTime(DateTime.Now.Year, 1, 1);
+      }
+      if (!max.HasValue)
+      {
+        max = DateTime.Now;
+      }
+      ViewData["min"] = min.Value.ToString("yyyy-MM-dd");
+      ViewData["max"] = max.Value.ToString("yyyy-MM-dd");
+      var res = await vendasRecords.FindByDateGruopingAsync(min, max);
+      return View(res);
     }
   }
 }

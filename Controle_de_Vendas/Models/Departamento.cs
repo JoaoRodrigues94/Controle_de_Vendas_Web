@@ -24,7 +24,7 @@ namespace Controle_de_Vendas.Models
       Vendedores.Add(vendedor);
     }
 
-    public double TotalVendedores(DateTime inicio, DateTime fim)
+    public double TotalVendas(DateTime inicio, DateTime fim)
     {
       return Vendedores.Sum(vendedor => vendedor.TotalVenda(inicio, fim));
     }

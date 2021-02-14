@@ -36,5 +36,26 @@ namespace Controle_de_Vendas.Servicos
         .OrderByDescending(x => x.Data)
         .ToListAsync();
     }
+
+    public async Task<List<IGrouping<Departamento,Vendas>>> FindByDateGruopingAsync(DateTime? min, DateTime? max)
+    {
+      var res = from obj in DB.Vendas select obj;
+
+      if (min.HasValue)
+      {
+        res = res.Where(x => x.Data >= min.Value);
+      }
+
+      if (max.HasValue)
+      {
+        res = res.Where(x => x.Data <= max.Value);
+      }
+      return await res
+        .Include(x => x.Vendedor)
+        .Include(x => x.Vendedor.Departamento)
+        .OrderByDescending(x => x.Data)
+        .GroupBy(x => x.Vendedor.Departamento)
+        .ToListAsync();
+    }
   }
 }
