@@ -44,7 +44,7 @@ namespace Controle_de_Vendas.Data
       Vendas vd7 = new Vendas(7, new DateTime(2021, 1, 11), 11000.0, StatusVendas.Faturado, v1);
       Vendas vd8 = new Vendas(8, new DateTime(2021, 1, 11), 11000.0, StatusVendas.Faturado, v2);
       Vendas vd9 = new Vendas(9, new DateTime(2021, 1, 11), 11000.0, StatusVendas.Faturado, v3);
-      Vendas vd10 = new Vendas(10, new DateTime(2021, 1, 11), 11000.0, StatusVendas.Faturado, v4);
+      Vendas vd10 = new Vendas(10, new DateTime(2021, 1, 11), 11000.0, StatusVendas.Pendente, v4);
       Vendas vd11 = new Vendas(11, new DateTime(2021, 1, 11), 11000.0, StatusVendas.Faturado, v5);
       Vendas vd12 = new Vendas(12, new DateTime(2021, 1, 11), 11000.0, StatusVendas.Faturado, v6);
 
